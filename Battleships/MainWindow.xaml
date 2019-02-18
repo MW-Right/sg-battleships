@@ -1,0 +1,114 @@
+﻿<Window x:Class="Battleships.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Battleships"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="780" Width="1250" Foreground="white">
+    <Window.Background>
+        <ImageBrush ImageSource="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/juCTlI0/aerial-top-down-view-of-a-deep-blue-sea-rippling-water-surface-reflecting-the-sunlight-with-a-sail-boat-sailing-by_h2zsuqpmx_thumbnail-full12.png"></ImageBrush>
+    </Window.Background>
+    <Grid x:Name="ButtonGrid" ShowGridLines="true" Width="1000px" Height="600px" HorizontalAlignment="Left" Margin="125,0,0,50" VerticalAlignment="Bottom">
+        <Grid.ColumnDefinitions>
+            <!--Left Grid Columns-->
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <!--Spacer Columns-->
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <!--Right Grid Columns-->
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!--12 Rows including a Title and Identifiers row-->
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--Headers-->
+        <TextBlock x:Name="Debug" FontWeight="ExtraBlack"  Grid.Column="81" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="BATTLESHIPS V1" FontSize="30px"  Grid.ColumnSpan="5"  VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="4" Grid.Row="1" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="Your Board" FontSize="15px"  Grid.ColumnSpan="2"  VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="17" Grid.Row="1" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="Their Board" FontSize="15px"  Grid.ColumnSpan="2"  VerticalAlignment="Top"/>
+        <!--Column Labels for right hand grid-->
+        <TextBlock Grid.Column="14" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="A" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="15" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="B" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="16" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="C" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="17" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="D" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="18" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="E" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="19" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="F" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="20" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="G" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="21" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="H" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="22" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="I" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="23" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="J" VerticalAlignment="Center"/>
+        <!--Column labels for left hand grid-->
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="A" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="B" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="3" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="C" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="4" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="D" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="5" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="E" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="6" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="F" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="7" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="G" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="8" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="H" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="9" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="I" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="10" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="J" VerticalAlignment="Center"/>
+        <!--Row Labels for right hand grid-->
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="3" Grid.RowSpan="2" TextWrapping="Wrap" Text="1" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="4" Grid.RowSpan="2" TextWrapping="Wrap" Text="2" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="5" Grid.RowSpan="2" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="6" Grid.RowSpan="2" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="7" Grid.RowSpan="2" TextWrapping="Wrap" Text="5" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="8" Grid.RowSpan="2" TextWrapping="Wrap" Text="6" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="9" Grid.RowSpan="2" TextWrapping="Wrap" Text="7" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="10" Grid.RowSpan="2" TextWrapping="Wrap" Text="8" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="11" Grid.RowSpan="2" TextWrapping="Wrap" Text="9" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="12" Grid.RowSpan="2" TextWrapping="Wrap" Text="9" VerticalAlignment="Top"/>
+        <!--Row Labels for left hand grid-->
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="3" Grid.RowSpan="2" TextWrapping="Wrap" Text="1" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="4" Grid.RowSpan="2" TextWrapping="Wrap" Text="2" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="5" Grid.RowSpan="2" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="6" Grid.RowSpan="2" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="7" Grid.RowSpan="2" TextWrapping="Wrap" Text="5" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="8" Grid.RowSpan="2" TextWrapping="Wrap" Text="6" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="9" Grid.RowSpan="2" TextWrapping="Wrap" Text="7" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="10" Grid.RowSpan="2" TextWrapping="Wrap" Text="8" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="11" Grid.RowSpan="2" TextWrapping="Wrap" Text="9" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="12" Grid.RowSpan="2" TextWrapping="Wrap" Text="10" VerticalAlignment="Top"/>
+        <TextBlock x:Name="computerPicks" Grid.ColumnSpan="4" FontSize="30px" Grid.Column="17" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="13" Grid.RowSpan="1" TextWrapping="Wrap" Text="B6" VerticalAlignment="Top"/>
+        <TextBox x:Name="playerPicks" Grid.ColumnSpan="4" FontSize="30" Grid.Column="4" HorizontalAlignment="Left" Height="70" Margin="0.2,0.4,0,0" Grid.Row="13" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="PlayerPicks_TextChanged"/>
+        <TextBlock Grid.Column="13" HorizontalAlignment="Left" FontSize="20" Margin="0,10,0,0" Grid.Row="13" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="Computer Picks" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="0,10,0,0" Grid.Row="13" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="You Pick" VerticalAlignment="Top"/>
+        <Button Grid.ColumnSpan="3" Content="Play" Grid.Column="8" HorizontalAlignment="Left" Margin="0.4,0.4,0,0" Grid.Row="13" Width="75" Click="Button_Click_1"/>
+    </Grid>
+</Window>
