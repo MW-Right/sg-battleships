@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleships"
         mc:Ignorable="d"
-        Title="MainWindow" Height="780" Width="1250" Foreground="white">
+        Title="MainWindow" Height="780" Width="1400" Foreground="white">
     <Window.Background>
-        <ImageBrush ImageSource="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/juCTlI0/aerial-top-down-view-of-a-deep-blue-sea-rippling-water-surface-reflecting-the-sunlight-with-a-sail-boat-sailing-by_h2zsuqpmx_thumbnail-full12.png"></ImageBrush>
+        <ImageBrush ImageSource="grid.png"></ImageBrush>
     </Window.Background>
-    <Grid x:Name="ButtonGrid" ShowGridLines="true" Width="1000px" Height="600px" HorizontalAlignment="Left" Margin="125,0,0,50" VerticalAlignment="Bottom">
+    <Grid x:Name="ButtonGrid" ShowGridLines="False" Width="1200px" Height="600px" HorizontalAlignment="Left" Margin="125,0,0,50" VerticalAlignment="Bottom">
         <Grid.ColumnDefinitions>
             <!--Left Grid Columns-->
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -24,10 +24,9 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <!--Spacer Columns-->
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
             <!--Right Grid Columns-->
-            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -57,10 +56,34 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
+        <!--Piece Selection Grid-->
+        <Grid x:Name="Grid2" ShowGridLines="False" x:FieldModifier="public" Grid.ColumnSpan="3" Grid.Column="10" Grid.Row="4" Grid.RowSpan="6" Margin="39.6,34.8,4.2,0.2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.2*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="10.2,0,0,10" Grid.RowSpan="1" TextWrapping="Wrap" Text="Piece Selection" FontSize="20" VerticalAlignment="Top" Grid.ColumnSpan="4"/>
+            <Button x:Name="rotate" Grid.ColumnSpan="1" Content="Rotate" Grid.Column="1" HorizontalAlignment="Left" Padding="0,0,0,0" Margin="3,5,2,2" Grid.Row="5" VerticalAlignment="Top" Width="45" Click="Rotate_Click"/>
+            <Button x:Name="place" Grid.ColumnSpan="1" Content="Place" Grid.Column="4" HorizontalAlignment="Left" Padding="0,0,0,0" Margin="3,5,2,2" Grid.Row="5" VerticalAlignment="Top" Width="45" Click="Place_Click" />
+            <TextBox x:Name="positionTextBox" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="0,0,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Position" VerticalAlignment="Top" Width="102" TextChanged="PositionTextBox_TextChanged" />
+
+        </Grid>
         <!--Headers-->
-        <TextBlock x:Name="Debug" FontWeight="ExtraBlack"  Grid.Column="81" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="BATTLESHIPS V1" FontSize="30px"  Grid.ColumnSpan="5"  VerticalAlignment="Top"/>
-        <TextBlock Grid.Column="4" Grid.Row="1" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="Your Board" FontSize="15px"  Grid.ColumnSpan="2"  VerticalAlignment="Top"/>
-        <TextBlock Grid.Column="17" Grid.Row="1" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="Their Board" FontSize="15px"  Grid.ColumnSpan="2"  VerticalAlignment="Top"/>
+        <TextBlock x:Name="Debug" FontWeight="ExtraBlack"  Grid.Column="10" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="BATTLESHIPS V1" FontSize="30px"  Grid.ColumnSpan="5"  VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="4" Grid.Row="1" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="Your Board" FontSize="15px"  Grid.ColumnSpan="3"  VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="17" Grid.Row="1" HorizontalAlignment="Left" Margin="5,3,0,0" Grid.RowSpan="1" TextWrapping="NoWrap" Text="Their Board" FontSize="15px"  Grid.ColumnSpan="3"  VerticalAlignment="Top"/>
         <!--Column Labels for right hand grid-->
         <TextBlock Grid.Column="14" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="A" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="15" HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="B" VerticalAlignment="Center"/>
@@ -105,10 +128,12 @@
         <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="10" Grid.RowSpan="2" TextWrapping="Wrap" Text="8" VerticalAlignment="Top"/>
         <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="11" Grid.RowSpan="2" TextWrapping="Wrap" Text="9" VerticalAlignment="Top"/>
         <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="11.2,17,0,0" Grid.Row="12" Grid.RowSpan="2" TextWrapping="Wrap" Text="10" VerticalAlignment="Top"/>
+        <!--Gameplay input-->
         <TextBlock x:Name="computerPicks" Grid.ColumnSpan="4" FontSize="30px" Grid.Column="17" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="13" Grid.RowSpan="1" TextWrapping="Wrap" Text="B6" VerticalAlignment="Top"/>
         <TextBox x:Name="playerPicks" Grid.ColumnSpan="4" FontSize="30" Grid.Column="4" HorizontalAlignment="Left" Height="70" Margin="0.2,0.4,0,0" Grid.Row="13" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="PlayerPicks_TextChanged"/>
         <TextBlock Grid.Column="13" HorizontalAlignment="Left" FontSize="20" Margin="0,10,0,0" Grid.Row="13" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="Computer Picks" VerticalAlignment="Top"/>
         <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontSize="20" Margin="0,10,0,0" Grid.Row="13" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="You Pick" VerticalAlignment="Top"/>
-        <Button Grid.ColumnSpan="3" Content="Play" Grid.Column="8" HorizontalAlignment="Left" Margin="0.4,0.4,0,0" Grid.Row="13" Width="75" Click="Button_Click_1"/>
+        <Button x:Name="playButton" Grid.ColumnSpan="3" IsEnabled="False" Content="Play" Grid.Column="8" HorizontalAlignment="Left" Margin="0.4,0.4,0,0" Grid.Row="13" Width="75" Click="Button_Click_1"/>
     </Grid>
+
 </Window>
