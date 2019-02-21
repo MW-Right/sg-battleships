@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Battleships"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="Wedge">
+            <Setter Property="TextElement.FontFamily" Value="/Fonts/#Wedgie"/>
+        </Style>
     </Application.Resources>
 </Application>

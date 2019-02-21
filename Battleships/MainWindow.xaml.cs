@@ -14,15 +14,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
-//using System.Drawing;
+
 
 namespace Battleships
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public class ProgramVariables
+    public partial class MainWindow : Window
     {
         //Computer array - 1x4, 3x3, 3x2
         public static int[,] computerShips = new int[,] {
@@ -36,20 +32,24 @@ namespace Battleships
             { 0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0 },
             { 5,5,5,5,5,0,0,0,0,0 } };
+        //Added a board with two ships for presentation demo
+        public static int[,] demoArr = new int[,]
+        {
+            { 1,1,0,2,0,0,0,0,0,0 },
+            { 0,0,0,2,0,0,0,0,0,0 },
+            { 0,0,0,2,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0 }
+        };
         //Player array - blank
-        public static int[,] playerShips = new int[,] {
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0 } };
+        public static int[,] playerShips = new int[10, 10];
         public static int playColumnNumber = 0;
-        
+
         public static int columnNumber = 0;
         public static int rowNumber = 0;
         public static int computerRow = 0;
@@ -67,10 +67,10 @@ namespace Battleships
         public static ImageBrush miss = new ImageBrush();
         //Setting Hit image brush
         public static ImageBrush hit = new ImageBrush();
-    }
+        //Counter for win condition
+        public static int counter = 0;
 
-    public partial class MainWindow : Window
-    {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -105,21 +105,21 @@ namespace Battleships
         }
         public void HitOrMiss()
         {
-            ProgramVariables.miss.ImageSource = new BitmapImage(new Uri(@"Images/miss.png", UriKind.Relative));
-            ProgramVariables.hit.ImageSource = new BitmapImage(new Uri(@"Images/hit.png", UriKind.Relative));
+            miss.ImageSource = new BitmapImage(new Uri(@"Images/miss.png", UriKind.Relative));
+            hit.ImageSource = new BitmapImage(new Uri(@"Images/hit.png", UriKind.Relative));
         }
         public void PlacePiece()
         //Draw player piece onto board
         {
             System.Windows.Shapes.Rectangle ship = new System.Windows.Shapes.Rectangle();
             ButtonGrid.Children.Add(ship);
-            Grid.SetColumn(ship, ProgramVariables.columnNumber + 1);
-            Grid.SetRow(ship, ProgramVariables.rowNumber + 3);
+            Grid.SetColumn(ship, columnNumber + 1);
+            Grid.SetRow(ship, rowNumber + 3);
             bool taken = false;
             ImageBrush imgBrush = new ImageBrush();
-            if (ProgramVariables.direction == "v")
+            if (direction == "v")
             {
-                switch (ProgramVariables.length[ProgramVariables.pieceIndex])
+                switch (length[pieceIndex])
                 {
                     case 4:
                         imgBrush.ImageSource = new BitmapImage(new Uri(@"Images/battleship4V.png", UriKind.Relative));
@@ -131,10 +131,10 @@ namespace Battleships
                         imgBrush.ImageSource = new BitmapImage(new Uri(@"Images/ShortShipV.png", UriKind.Relative));
                         break;
                 }
-                for (int i = 0; i < ProgramVariables.length[ProgramVariables.pieceIndex]; i++)
+                for (int i = 0; i < length[pieceIndex]; i++)
                     //For each position in a piece, check if the position is taken by comparing it to the player ships array
                 {
-                    if (ProgramVariables.playerShips[ProgramVariables.columnNumber, ProgramVariables.rowNumber + i] != 0)
+                    if (playerShips[rowNumber + i, columnNumber] != 0)
                     {
                         taken = true;
                     }
@@ -146,11 +146,11 @@ namespace Battleships
                 if (taken == false)
                     //If the position isn't taken, draw the pieces
                 {
-                    for (int i = 0; i < ProgramVariables.length[ProgramVariables.pieceIndex]; i++)
+                    for (int i = 0; i < length[pieceIndex]; i++)
                     {
-                        ProgramVariables.playerShips[ProgramVariables.rowNumber + i, ProgramVariables.columnNumber] = 1;
+                        playerShips[rowNumber + i, columnNumber] = 1;
                     }
-                    Grid.SetRowSpan(ship, ProgramVariables.length[ProgramVariables.pieceIndex]);
+                    Grid.SetRowSpan(ship, length[pieceIndex]);
                     Grid.SetColumnSpan(ship, 1);
                     ship.Fill = imgBrush;
                 }
@@ -159,9 +159,9 @@ namespace Battleships
                     System.Windows.Forms.MessageBox.Show("There is already a ship there");
                 }
             }
-            else if (ProgramVariables.direction == "h")
+            else if (direction == "h")
             {
-                switch (ProgramVariables.length[ProgramVariables.pieceIndex])
+                switch (length[pieceIndex])
                 {
                     case 4:
                         imgBrush.ImageSource = new BitmapImage(new Uri(@"Images/battleship4.png", UriKind.Relative));
@@ -173,10 +173,10 @@ namespace Battleships
                         imgBrush.ImageSource = new BitmapImage(new Uri(@"Images/ShortShip.png", UriKind.Relative));
                         break;
                 }
-                for (int i = 0; i < ProgramVariables.length[ProgramVariables.pieceIndex]; i++)
+                for (int i = 0; i < length[pieceIndex]; i++)
                 //For each position in a piece, check if the position is taken by comparing it to the player ships array
                 {
-                    if (ProgramVariables.playerShips[ProgramVariables.rowNumber, ProgramVariables.columnNumber + i] != 0)
+                    if (playerShips[rowNumber, columnNumber + i] != 0)
                     {
                         taken = true;
                     }
@@ -187,12 +187,12 @@ namespace Battleships
                 }
                 if (taken == false)
                 {
-                    for (int i = 0; i < ProgramVariables.length[ProgramVariables.pieceIndex]; i++)
+                    for (int i = 0; i < length[pieceIndex]; i++)
                     {
-                        ProgramVariables.playerShips[ProgramVariables.rowNumber, ProgramVariables.columnNumber + i] = 1;
+                        playerShips[rowNumber, columnNumber + i] = 1;
                     }
                     Grid.SetRowSpan(ship, 1);
-                    Grid.SetColumnSpan(ship, ProgramVariables.length[ProgramVariables.pieceIndex]);
+                    Grid.SetColumnSpan(ship, length[pieceIndex]);
                     ship.Fill = imgBrush;
                 }
                 else
@@ -213,11 +213,11 @@ namespace Battleships
             Grid.SetRow(shipRect, 1);
             //Set image background for ships in placement phase
             ImageBrush imgBrush = new ImageBrush();
-            if (ProgramVariables.direction == "v")
+            if (direction == "v")
             {
-                Grid.SetRowSpan(shipRect, ProgramVariables.length[ProgramVariables.pieceIndex]);
+                Grid.SetRowSpan(shipRect, length[pieceIndex]);
                 Grid.SetColumnSpan(shipRect, 1);
-                switch (ProgramVariables.length[ProgramVariables.pieceIndex])
+                switch (length[pieceIndex])
                 {
                     case 4:
                         imgBrush.ImageSource = new BitmapImage(new Uri(@"Images/battleship4V.png", UriKind.Relative));
@@ -230,11 +230,11 @@ namespace Battleships
                         break;
                 }
             }
-            else if (ProgramVariables.direction == "h")
+            else if (direction == "h")
             {
                 Grid.SetRowSpan(shipRect, 1);
-                Grid.SetColumnSpan(shipRect, ProgramVariables.length[ProgramVariables.pieceIndex]);
-                switch (ProgramVariables.length[ProgramVariables.pieceIndex])
+                Grid.SetColumnSpan(shipRect, length[pieceIndex]);
+                switch (length[pieceIndex])
                 {
                     case 4:
                         imgBrush.ImageSource = new BitmapImage(new Uri(@"Images/battleship4.png", UriKind.Relative));
@@ -263,25 +263,30 @@ namespace Battleships
         public void CheckImpactPlayer()
         //Checks impact on Player turn
         {
-            if (ProgramVariables.computerShips[ProgramVariables.rowNumber, ProgramVariables.columnNumber] > 0)
+            if (computerShips[rowNumber, columnNumber] > 0)
             {
                 Rectangle myRect = new Rectangle();
                 myRect.Width = 30;
                 myRect.Height = 30;
                 ButtonGrid.Children.Add(myRect);
-                Grid.SetColumn(myRect, ProgramVariables.columnNumber + 14);
-                Grid.SetRow(myRect, ProgramVariables.rowNumber + 3);
-                myRect.Fill = ProgramVariables.hit;
+                Grid.SetColumn(myRect, columnNumber + 14);
+                Grid.SetRow(myRect, rowNumber + 3);
+                myRect.Fill = hit;
+                counter++;
             }
             else
             {
                 Rectangle myRect = new Rectangle();
                 myRect.Width = 30;
                 myRect.Height = 30;
-                ButtonGrid.Children.Add(myRect);
-                Grid.SetColumn(myRect, ProgramVariables.columnNumber + 14);
-                Grid.SetRow(myRect, ProgramVariables.rowNumber + 3);
-                myRect.Fill = ProgramVariables.miss;
+                ButtonGrid.Children.Add(myRect); 
+                Grid.SetColumn(myRect, columnNumber + 14);
+                Grid.SetRow(myRect, rowNumber + 3);
+                myRect.Fill = miss;
+            }
+            if (counter == 5)
+            {
+                System.Windows.Forms.MessageBox.Show("You Win!");
             }
         }
         public void CheckImpactComputer()
@@ -290,13 +295,14 @@ namespace Battleships
             Random rnd = new Random();
             int computerRow = rnd.Next(0, 10);
             int computerColumn = rnd.Next(0, 10);
-            if (ProgramVariables.playerShips[computerRow, computerColumn] > 0)
+            computerPicks.Text = $"{alpha[computerColumn]}{computerRow + 1}";
+            if (playerShips[computerRow, computerColumn] > 0)
             {
                 Rectangle myRect = new Rectangle();
                 ButtonGrid.Children.Add(myRect);
                 Grid.SetColumn(myRect, computerColumn + 1);
                 Grid.SetRow(myRect, computerRow + 3);
-                myRect.Fill = ProgramVariables.hit;
+                myRect.Fill = hit;
             }
             else
             {
@@ -304,7 +310,7 @@ namespace Battleships
                 ButtonGrid.Children.Add(myRect);
                 Grid.SetColumn(myRect, computerColumn + 1);
                 Grid.SetRow(myRect, computerRow + 3);
-                myRect.Fill = ProgramVariables.miss;
+                myRect.Fill = miss;
             }
         }
 
@@ -318,75 +324,100 @@ namespace Battleships
 
         }
 
+        public void PlayerPicks_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            tb.Text = string.Empty;
+            tb.GotFocus -= PlayerPicks_GotFocus;
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //Selection Conversion for columns
-            char columnLetter = Convert.ToChar(playerPicks.Text.Substring(0, 1));
-            foreach (var i in ProgramVariables.alphabet)
+            char columnLetter = Convert.ToChar(playerPicks.Text.Substring(0, 1).ToUpper());
+            foreach (var i in alphabet)
             {
                 if (columnLetter == i)
                 {
-                    ProgramVariables.columnNumber = ProgramVariables.alphabet.IndexOf(i);
+                    columnNumber = alphabet.IndexOf(i);
                 }
             }
             //Selection Row number
-            ProgramVariables.rowNumber = Convert.ToInt32(playerPicks.Text.Substring(1, 1)) - 1;
+            rowNumber = Convert.ToInt32(playerPicks.Text.Substring(1, 1)) - 1;
             CheckImpactPlayer();
             CheckImpactComputer();
         }
 
         private void Rotate_Click(object sender, RoutedEventArgs e)
         {
-            if (ProgramVariables.direction == "v")
+            if (direction == "v")
             {
-                ProgramVariables.direction = "h";
+                direction = "h";
             }
-            else if (ProgramVariables.direction == "h")
+            else if (direction == "h")
             {
-                ProgramVariables.direction = "v";
+                direction = "v";
             }
-            Trace.WriteLine(ProgramVariables.direction);
+            Trace.WriteLine(direction);
             ShipSelection();
         }
 
         private void Place_Click(object sender, RoutedEventArgs e)
         {
-            //Selection Conversion for columns
-            char columnLetter = Convert.ToChar(positionTextBox.Text.Substring(0, 1));
-            ProgramVariables.columnNumber = 0;
-            foreach (var i in ProgramVariables.alphabet)
+            if (positionTextBox.Text.Length == 2)
             {
-                if (columnLetter == i)
+                //Selection Conversion for columns
+                char columnLetter = Convert.ToChar(positionTextBox.Text.Substring(0, 1).ToUpper());
+                columnNumber = 0;
+                foreach (var i in alphabet)
                 {
-                    ProgramVariables.columnNumber = ProgramVariables.alphabet.IndexOf(i);
+                    if (columnLetter == i)
+                    {
+                        columnNumber = alphabet.IndexOf(i);
+                    }
                 }
-            }
-            ProgramVariables.rowNumber = Convert.ToInt32(positionTextBox.Text.Substring(1, 1)) - 1;
-            PlacePiece();
-            if (ProgramVariables.pieceIndex < 6)
-            {
-                ProgramVariables.pieceIndex++;
-            }
-            else if (ProgramVariables.pieceIndex == 6)
-            {
-                positionTextBox.IsEnabled = false;
-                //playButton.IsEnabled = true;
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 10; j++)
+                rowNumber = Convert.ToInt32(positionTextBox.Text.Substring(1, 1)) - 1;
+                PlacePiece();
+                if (pieceIndex < 6)
                 {
-                    Trace.Write(ProgramVariables.playerShips[i,j]);
+                    pieceIndex++;
                 }
-                Trace.Write("\n");
+                else if (pieceIndex == 6)
+                {
+                    positionTextBox.IsEnabled = false;
+                }
+                for (int i = 0; i < 10; i++)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        Trace.Write(playerShips[i, j]);
+                    }
+                    Trace.Write("\n");
+                }
+                Trace.WriteLine("\n");
+                ShipSelection();
             }
-            Trace.WriteLine("\n");
-            ShipSelection();
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Enter a location");
+            }
         }
 
         private void PositionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void PositionTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            tb.Text = string.Empty;
+            tb.GotFocus -= PositionTextBox_GotFocus;
+        }
+
+        private void Demo_Click(object sender, RoutedEventArgs e)
+        {
+            computerShips = MainWindow.demoArr;
         }
     }
 }

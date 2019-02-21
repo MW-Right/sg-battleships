@@ -92,6 +92,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\Wedgie.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -101,15 +102,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="grid.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icons8_battleship_48_Z4h_icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="battleship4.bmp" />
     <Resource Include="longship3.bmp" />
     <Resource Include="ShortShip.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="grid.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
