@@ -286,7 +286,7 @@ namespace Battleships
             }
             if (counter == 5)
             {
-                System.Windows.Forms.MessageBox.Show("You Win!");
+                System.Windows.Forms.MessageBox.Show("You sunk my battleship!");
             }
         }
         public void CheckImpactComputer()
